@@ -1,17 +1,6 @@
-# Object files
-*.o
+# IDE files
+.idea
+.idea/
 
-# Libraries
-*.lib
-*.a
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
+# OS files
+.DS_Store
