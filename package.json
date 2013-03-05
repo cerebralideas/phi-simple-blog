@@ -4,7 +4,7 @@
 		"name": "Justin Lowery",
 		"email": "info@cerebralideas.com"
 	},
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"scripts": {
 		"start": "node app.js"
 	},
@@ -12,7 +12,8 @@
 		"express": "3.0.x",
 		"jade": "*",
 		"markdown": "0.4.0",
-		"mongoose": "3.5.7"
+		"mongoose": "3.5.7",
+		"nodemailer": "0.3.37"
 	},
 	"analyze": false,
 	"description": "A blog about UX related items.",
