@@ -1,0 +1,296 @@
+@charset 'UTF-8';
+
+@import 'fonts';
+
+/* ===== Project Specific Typographic Styles ==================================================
+   Todo: ensure text body is max 36em wide.
+   ========================================================================== */
+
+h2, h3, h4, h5, h6 {
+	letter-spacing: 0;
+}
+h1 em, h2 em, h3 em, h4 em, h5 em, h6 em {
+	font-family: 'Romain-Headline-Regular-Italic';
+	font-style: italic;
+}
+h1 {
+	font-style: italic;
+	font-weight: 900;
+
+	&.callout {
+		font-size: 6em;
+		padding-bottom: 0.2em;
+	}
+}
+h3 {
+	font-family: 'Romain-Headline-Black';
+	font-weight: 900;
+}
+
+/* ===== Global Styles ========================================================
+   ========================================================================== */
+
+.C6 {
+	display: none;
+}
+.alert {
+	padding: ($baseLineHeight / 2) $baseLineHeight;
+}
+#logo {
+	letter-spacing: -0.05em;
+	padding: 0;
+	color: $purple;
+	font-weight: 400;
+}
+.th {
+	text-align: right;
+
+	img {
+		display: inline-block;
+		width: 90%;
+		max-width: 500px;
+		// @include border-radius(1000px);
+	}
+}
+a {
+	color: #0D6A99;
+	text-decoration: underline;
+}
+a:hover {
+	text-decoration: none;
+}
+header p {
+	font-family: 'Romain-Text-Italic';
+	font-style: italic;
+}
+.unstyled {
+	list-style: none;
+}
+em {
+	font-family: 'Romain-Text-Italic';
+	font-style: italic;
+}
+strong {
+	font-family: 'Romain-Text-Bold';
+	font-weight: 700;
+}
+label {
+	font-family: 'Romain-Text-Bold';
+	font-size: 1em;
+	color: #333;
+	cursor: pointer;
+}
+input[type='text'], input[type='email'], textarea {
+	height: 2em;
+	background: none;
+	border: 1px solid #ccc;
+	border-left-width: 10px;
+	box-shadow: none;
+	width: 100%;
+	font-family: 'Romain-Text-Italic';
+	font-size: 1.3125em;
+	line-height: 1.5em;
+	font-style: italic;
+	color: #333;
+	margin-bottom: 1em;
+}
+textarea {
+	height: 12em;
+	margin-top: 0.5em;
+	line-height: 1.5em;
+	background-size: 100% 1.5em;
+}
+input[type='text']:focus, input[type='email']:focus, textarea:focus {
+	box-shadow: none;
+}
+input:focus:required:invalid:focus,
+textarea:focus:required:invalid:focus,
+select:focus:required:invalid:focus {
+	box-shadow: none;
+}
+.req {
+	color: darkred;
+}
+.screenshot {
+	margin-top: $baseLineHeight * 4;
+	@include opacity(0.8);
+	@include transition(opacity 0.25s ease-in);
+
+	&:hover {
+		@include opacity(1);
+	}
+}
+.modal {
+	width: 850px;
+}
+
+// Navigation
+
+.inlineLinkList {
+	margin: 0 0 $baseLineHeight;
+}
+.navItem {
+	background: none;
+
+	& > a {
+		text-align: center;
+		display: block;
+		font-family: 'Romain-Headline-Regular-Italic';
+		font-style: italic;
+		border-top: 0.5em solid $grayLighter;
+		@include transition(border-color 0.15s ease-in);
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: none;
+			border-top-color: #cd8c0b;
+			color: #463359;
+			background: none;
+		}
+	}
+	&.active, &.active:hover {
+		background: none;
+		border: none;
+
+		a {
+			border-top-color: $purple;
+			background: none;
+			color: $baseTextColor;
+		}
+	}
+}
+
+/* ===== Section Styles ==============================================
+   ========================================================================== */
+section {
+	padding: ($baseLineHeight * 2) 0;
+}
+.rowMain > section {
+	min-height: 1000px;
+	padding: ($baseLineHeight * 4) 0 ($baseLineHeight * 8);
+}
+article {
+	max-width: 49%;
+	min-width: 20em;
+}
+section > header, footer > header {
+	border-bottom: 1px solid $grayLighter;
+}
+.rowMain > footer {
+	margin-bottom: 10em;
+}
+.calloutSection {
+	margin: ($baseLineHeight * 7) 0 ($baseLineHeight * 4);
+}
+.communityLinks > li {
+	margin: ($baseLineHeight / 2) 0;
+}
+
+/* This is recommended for IE on Win8 touch Ix */
+canvas {
+	-ms-touch-action: double-tap-zoom;
+}
+
+/* IE8 and below typography fixes */
+
+.lt-ie9 {
+
+	body {
+		font-family: Georgia, Times, serif !important;
+	}
+	[class^="icon-"]:before, [class*=" icon-"]:before {
+		font-family: 'entypo' !important;
+	}
+	h2, h3, h4, h5, h6 {
+		font-family: Georgia, Times, serif !important;
+	}
+	.navItem > a {
+		font-family: Georgia, Times, serif !important;
+	}
+	h1 em, h2 em, h3 em, h4 em, h5 em, h6 em {
+		font-family: Georgia, Times, serif !important;
+	}
+	h3 {
+		font-family: Georgia, Times, serif !important;
+	}
+}
+
+/* IE7 and below fix for inline-block */
+
+.lt-ie8 {
+
+	.navItem {
+		display: inline;
+		margin: 0 5px;
+		zoom: 1;
+	}
+}
+
+@media only screen and (min-width: $screenXlarge) {}
+
+/* Medium screens */
+@media only screen and (max-width: $screenMedium) and (min-width: $screenSmall) {
+
+	.calloutSection {
+		font-size: 0.85em;
+	}
+}
+
+/* Medium screens and up */
+@media only screen and (min-width: $screenSmall) {
+
+	.C6 {
+		display: block;
+		position: fixed;
+		z-index: -1;
+		width: 100%;
+		right: -30%;
+		bottom: -25%;
+		text-align: center;
+
+		img {
+			width: 50%;
+			max-width: 600px;
+		}
+	}
+}
+
+/* Small screens */
+@media only screen and (max-width: $screenSmall) {
+
+	article {
+		max-width: 30em;
+	}
+	.th {
+		text-align: left;
+
+		img {
+			width: 100%;
+		}
+	}
+	h1 {
+		font-size: 3em;
+	}
+	section {
+		padding: ($baseLineHeight * 2) 0;
+	}
+	.rowMain > section {
+		min-height: 0;
+		padding: ($baseLineHeight * 1) 0 ($baseLineHeight * 4);
+	}
+	.calloutSection {
+		margin: ($baseLineHeight * 1) 0 ($baseLineHeight * 1);
+	}
+	.navItem {
+		width: 49%;
+	}
+	.calloutSection {
+
+		.callout, .subheader {
+			display: inline-block;
+		}
+		.callout {
+			margin-right: 0.1em;
+		}
+	}
+}

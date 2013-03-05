@@ -1,0 +1,31 @@
+{
+	"name": "phi",
+	"version": "0.14.0",
+	"description": "A Web-App Toolkit and Modular Framework",
+	"author": {
+		"name": "Justin Lowery",
+		"company": "Cerebral Ideas",
+		"url": "http://cerebralideas.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cerebralideas/phi.git"
+	},
+	"bugs": {
+		"url": ""
+	},
+	"licenses": [
+		{
+			"type": "",
+			"url": ""
+		}
+	],
+	"dependencies": {},
+	"devDependencies": {
+		"grunt": "0.3.17",
+		"grunt-contrib": "0.2.0",
+		"grunt-docs": "0.2.3",
+		"testacular": "0.2.1"
+	},
+	"keywords": []
+}
