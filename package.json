@@ -15,5 +15,13 @@
 		"mongoose": "3.5.7"
 	},
 	"analyze": false,
-	"description": "A blog about UX related items."
+	"description": "A blog about UX related items.",
+	"domains": [
+		"thinkux.io",
+		"www.thinkux.io"
+	],
+	"subdomain": "thinkux",
+	"engines": {
+		"node": "0.8.x"
+	}
 }
