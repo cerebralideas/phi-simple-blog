@@ -46,6 +46,7 @@ function buildBlogPosts(req, res) {
 			endOfFirstParagraph,
 			startOfMeta,
 			endOfMeta,
+			startOfContent,
 			dateObj;
 
 		fs.readFile('posts/' + item, 'UTF8', function (err, data) {
@@ -67,6 +68,7 @@ function buildBlogPosts(req, res) {
 			postUrl = '/blog/' + encodedUrl + '/';
 
 			// Grab article contents
+			startOfContent = endOfMeta || -2;
 			postContent = data.slice(endOfMeta + 2);
 			postContent = postContent.trim();
 
@@ -76,14 +78,14 @@ function buildBlogPosts(req, res) {
 
 			// Start building the post object in the posts array
 			post = {
-				title: postMetaJson.title,
-				author: postMetaJson.author,
-				tags: postMetaJson.tags,
-				link: postUrl,
-				rawDate: dateObj,
-				postDate: postMetaJson.date,
-				excerpt: markdown.toHTML(excerpt),
-				content: markdown.toHTML(postContent)
+				title: postMetaJson.title || item,
+				author: postMetaJson.author || '',
+				tags: postMetaJson.tags || [],
+				link: postUrl || '',
+				rawDate: dateObj || '',
+				postDate: postMetaJson.date || '',
+				excerpt: markdown.toHTML(excerpt) || '',
+				content: markdown.toHTML(postContent) || ''
 			};
 
 			posts.push(post);
@@ -164,6 +166,7 @@ function buildSinglePost(req, res) {
 		postUrl = '/blog/' + encodedUrl + '/';
 
 		// Grab article contents
+		startOfContent = endOfMeta || -2;
 		postContent = data.slice(endOfMeta + 2);
 		postContent = postContent.trim();
 
@@ -173,14 +176,14 @@ function buildSinglePost(req, res) {
 
 		// Start building the post object in the posts array
 		post = {
-			title: postMetaJson.title,
-			author: postMetaJson.author,
-			tags: postMetaJson.tags,
-			link: postUrl,
-			rawDate: dateObj,
-			postDate: postMetaJson.date,
-			excerpt: markdown.toHTML(excerpt),
-			content: markdown.toHTML(postContent)
+			title: postMetaJson.title || item,
+			author: postMetaJson.author || '',
+			tags: postMetaJson.tags || [],
+			link: postUrl || '',
+			rawDate: dateObj || '',
+			postDate: postMetaJson.date || '',
+			excerpt: markdown.toHTML(excerpt) || '',
+			content: markdown.toHTML(postContent) || ''
 		};
 
 		// We're done. Send post out!
