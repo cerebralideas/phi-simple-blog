@@ -13,8 +13,6 @@ function buildBlogPosts(req, res) {
 		length = 0,
 		posts = [];
 
-	console.log(req.route);
-
 	function sendPosts() {
 
 		// Send posts to template for rendering
@@ -24,55 +22,69 @@ function buildBlogPosts(req, res) {
 		});
 	}
 
-	function readPostFileStats(iterThree) {
-
-		fs.stat('posts/' + postFiles[iterThree], function (err, stats) {
-
-			if (err) {
-
-				throw err;
-			}
-
-			// Add date to post object
-			posts[iterThree].date = stats.mtime;
-
-			// If this is the last item in the dir, send data to be rendered
-			if ((length - iterThree) === 1) {
-
-				sendPosts();
-			}
-		});
-	}
-
 	function readPostFile(iter) {
 
-		fs.readFile('posts/' + postFiles[iter], 'UTF8', function (err, data) {
+		var item = postFiles[iter],
+			postUrl,
+			grabUrl,
+			encodedUrl,
+			post,
+			excerpt,
+			rawTitle,
+			postTitle,
+			endOfFirstParagraph,
+			startOfDate,
+			endOfDate,
+			titleDate,
+			dateObj,
+			formattedDate,
+			grabMonth,
+			grabDate,
+			grabYear;
 
-			var excerpt,
-				title,
-				endOfFirstParagraph;
+		// Start making the titles, urls and dates pretty
+		startOfDate = item.indexOf('__');
+		endOfDate = item.lastIndexOf('.');
+		titleDate = item.slice(startOfDate, endOfDate).replace(/_{1,}/g, ' ');
+		dateObj = new Date(titleDate);
+		grabMonth = dateObj.getMonth();
+		grabMonth = grabMonth + 1;
+		grabDate = dateObj.getDate();
+		grabYear = dateObj.getFullYear();
+		formattedDate = grabYear + '/' + grabMonth + '/' + grabDate;
+		rawTitle = item.slice(0, startOfDate);
+		postTitle = rawTitle.replace(/_{1,}/g, ' ');
+		grabUrl = item.replace('.md', '');
+		encodedUrl = encodeURIComponent(grabUrl);
+		postUrl = '/blog/' + encodedUrl + '/';
+
+		fs.readFile('posts/' + item, 'UTF8', function (err, data) {
 
 			if (err) {
 				throw err;
 			}
-
-			// Make titles pretty: replace underscores with spaces
-			title = postFiles[iterTwo].replace(/_{1,}/g, ' ');
-			title = title.replace('.md', '');
 
 			// Make excerpt
 			endOfFirstParagraph = data.indexOf('\n\n');
-			excerpt = data.slice(0, endOfFirstParagraph);
+			excerpt = data.slice(0, endOfFirstParagraph).replace(/#{1,}/g, '');
 
 			// Start building the post object in the posts array
-			posts[iterTwo] = {};
-			posts[iterTwo].title = title;
-			posts[iterTwo].link = '/blog/' + postFiles[iterTwo].replace('.md', '') + '/';
-			posts[iterTwo].excerpt = markdown.toHTML(excerpt);
-			posts[iterTwo].content = markdown.toHTML(data);
+			post = {
+				title: postTitle,
+				link: postUrl,
+				rawDate: dateObj,
+				postDate: formattedDate,
+				excerpt: markdown.toHTML(excerpt),
+				content: markdown.toHTML(data)
+			};
 
-			// kick start the file stats to grab file metadata
-			readPostFileStats(iterTwo);
+			posts.push(post);
+
+			// If this is the last item in the dir, send data to be rendered
+			if ((length - iterTwo) === 1) {
+
+				sendPosts();
+			}
 
 			iterTwo++;
 		});
@@ -126,28 +138,48 @@ function buildSinglePost(req, res) {
 
 		console.log(data);
 
-		// Make titles pretty: replace underscores with spaces
-		title = title.replace(/_{1,}/g, ' ');
+		var item = title,
+			postUrl,
+			grabUrl,
+			encodedUrl,
+			rawTitle,
+			postTitle,
+			startOfDate,
+			endOfDate,
+			titleDate,
+			dateObj,
+			formattedDate,
+			grabMonth,
+			grabDate,
+			grabYear;
+
+		// Start making the titles, urls and dates pretty
+		startOfDate = item.indexOf('__');
+		endOfDate = item.lastIndexOf('.');
+		titleDate = item.slice(startOfDate, endOfDate).replace(/_{1,}/g, ' ');
+		dateObj = new Date(titleDate);
+		grabMonth = dateObj.getMonth();
+		grabMonth = grabMonth + 1;
+		grabDate = dateObj.getDate();
+		grabYear = dateObj.getFullYear();
+		formattedDate = grabYear + '/' + grabMonth + '/' + grabDate;
+		rawTitle = item.slice(0, startOfDate);
+		postTitle = rawTitle.replace(/_{1,}/g, ' ');
+		grabUrl = item.replace('.md', '');
+		encodedUrl = encodeURIComponent(grabUrl);
+		postUrl = '/blog/' + encodedUrl + '/';
 
 		// Start building the post object in the posts array
-		post = {};
-		post.title = title;
-		post.content = markdown.toHTML(data);
+		post = {
+			title: postTitle,
+			link: postUrl,
+			rawDate: dateObj,
+			postDate: formattedDate,
+			content: markdown.toHTML(data)
+		};
 
-		// Grab date from stats
-		fs.stat(url, function (err, stats) {
-
-			if (err) {
-
-				throw err;
-			}
-
-			// Add date to post object
-			post.date = stats.mtime;
-
-			// We're done. Send post out!
-			sendPost();
-		});
+		// We're done. Send post out!
+		sendPost();
 	})
 }
 
