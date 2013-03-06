@@ -4,7 +4,7 @@
 		"name": "Justin Lowery",
 		"email": "info@cerebralideas.com"
 	},
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"scripts": {
 		"start": "node app.js"
 	},

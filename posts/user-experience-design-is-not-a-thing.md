@@ -1,3 +1,10 @@
+{{
+	"title": "User-Experience Design is Not a Thing!",
+	"author": "Justin Lowery",
+	"date": "2013/2/2",
+	"tags": ["Design", "UX", "Rant"]
+}}
+
 So, I'm minding my own business, going through my Internets, and I notice this article by [A List Apart: Looking Beyond User-Centered Design](http://alistapart.com/column/looking-beyond-user-centered-design). Then, bam! I'm confronted with a big, pet peeve of mine: User-Experience Design! Ugh, and it's published on one of our industry's leading sites. [sad panda]
 
 Here's a quote from the article:
@@ -10,7 +17,7 @@ The reason the definition is elusive to most is because people like this keep mi
 
 *UX is an evidence-based methodology for orchestrating the successful creation and deployment of a product or service that usually involves the oversight of many disciplines. The focus of this methodology is to create a valuable, seamless and frictionless experience for the user.*
 
-It's just semantics right? Why does it matter? Good questions. Let's first start with a little context. 
+It's just semantics right? Why does it matter? Good questions. Let's first start with a little context.
 
 Our industry is experiencing its late but very welcome heyday. For the past few years, we designers are finally getting recognized for our value and are now being included as an integral part of product and service development. No longer are the days when a bunch of non-designers dreamed up and developed entire products or services without thinking about the impact of design.
 
@@ -18,7 +25,7 @@ In the old days, design was considered the last remaining hurdle to launching yo
 
 I believe because of this swing in perceived value, we are now trying to squeeze it for all it's worth, claiming ownership of things clearly outside of our own discipline. Somehow, we snatched up user-experience and stuck our flag in it. Then, all our business cards and websites started to read "UX designer"! That sounds awesome, right?
 
-But, you can't design a user's experience. At least, not in the common sense of the word. I don't care how skilled you are at skeuomorphic button design, or how you can design a whole web-app without a single box-shadow or gradient. What's the common phrase, "putting lipstick on a pig"? 
+But, you can't design a user's experience. At least, not in the common sense of the word. I don't care how skilled you are at skeuomorphic button design, or how you can design a whole web-app without a single box-shadow or gradient. What's the common phrase, "putting lipstick on a pig"?
 
 When was the last time you thoroughly enjoyed using something that was beautiful but pointless? Or, have you ever been swept off your feet by a website riddled with grammatical errors and misspellings? What about falling in love with a well designed app that has a confusing purpose (see [Color for iPhone](http://www.color.com/))?
 

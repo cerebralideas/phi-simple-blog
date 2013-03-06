@@ -13,7 +13,17 @@ function buildBlogPosts(req, res) {
 		length = 0,
 		posts = [];
 
+	function compare(a, b) {
+		if (a.rawDate > b.rawDate)
+			return -1;
+		if (a.rawDate < b.rawDate)
+			return 1;
+		return 0;
+	}
+
 	function sendPosts() {
+
+		posts.sort(compare);
 
 		// Send posts to template for rendering
 		res.render('blog', {
@@ -25,38 +35,18 @@ function buildBlogPosts(req, res) {
 	function readPostFile(iter) {
 
 		var item = postFiles[iter],
+			postMetaString,
+			postMetaJson,
 			postUrl,
+			postContent,
 			grabUrl,
 			encodedUrl,
 			post,
 			excerpt,
-			rawTitle,
-			postTitle,
 			endOfFirstParagraph,
-			startOfDate,
-			endOfDate,
-			titleDate,
-			dateObj,
-			formattedDate,
-			grabMonth,
-			grabDate,
-			grabYear;
-
-		// Start making the titles, urls and dates pretty
-		startOfDate = item.indexOf('__');
-		endOfDate = item.lastIndexOf('.');
-		titleDate = item.slice(startOfDate, endOfDate).replace(/_{1,}/g, ' ');
-		dateObj = new Date(titleDate);
-		grabMonth = dateObj.getMonth();
-		grabMonth = grabMonth + 1;
-		grabDate = dateObj.getDate();
-		grabYear = dateObj.getFullYear();
-		formattedDate = grabYear + '/' + grabMonth + '/' + grabDate;
-		rawTitle = item.slice(0, startOfDate);
-		postTitle = rawTitle.replace(/_{1,}/g, ' ');
-		grabUrl = item.replace('.md', '');
-		encodedUrl = encodeURIComponent(grabUrl);
-		postUrl = '/blog/' + encodedUrl + '/';
+			startOfMeta,
+			endOfMeta,
+			dateObj;
 
 		fs.readFile('posts/' + item, 'UTF8', function (err, data) {
 
@@ -64,18 +54,36 @@ function buildBlogPosts(req, res) {
 				throw err;
 			}
 
+			// Get meta from post and JSON'ify it
+			startOfMeta = data.indexOf('{{');
+			endOfMeta = data.lastIndexOf('}}');
+			postMetaString = data.slice(startOfMeta, endOfMeta + 1).replace('{', '');
+			postMetaJson = JSON.parse(postMetaString);
+
+			// Now build additional meta data for post object
+			dateObj = new Date(postMetaJson.date);
+			grabUrl = item.replace('.md', '');
+			encodedUrl = encodeURIComponent(grabUrl);
+			postUrl = '/blog/' + encodedUrl + '/';
+
+			// Grab article contents
+			postContent = data.slice(endOfMeta + 2);
+			postContent = postContent.trim();
+
 			// Make excerpt
-			endOfFirstParagraph = data.indexOf('\n\n');
-			excerpt = data.slice(0, endOfFirstParagraph).replace(/#{1,}/g, '');
+			endOfFirstParagraph = postContent.indexOf('\n\n');
+			excerpt = postContent.slice(0, endOfFirstParagraph).replace(/#{1,}/g, '');
 
 			// Start building the post object in the posts array
 			post = {
-				title: postTitle,
+				title: postMetaJson.title,
+				author: postMetaJson.author,
+				tags: postMetaJson.tags,
 				link: postUrl,
 				rawDate: dateObj,
-				postDate: formattedDate,
+				postDate: postMetaJson.date,
 				excerpt: markdown.toHTML(excerpt),
-				content: markdown.toHTML(data)
+				content: markdown.toHTML(postContent)
 			};
 
 			posts.push(post);
@@ -114,14 +122,10 @@ function buildBlogPosts(req, res) {
 function buildSinglePost(req, res) {
 
 	var post = {},
-		title = req.route.params.post,
+		item = req.route.params.post,
 		url = 'posts/' + req.route.params.post + '.md';
 
-	// console.log(req.route);
-
-	function sendPost() {
-
-		console.log(post);
+	function sendPost(post) {
 
 		// Send posts to template for rendering
 		res.render('post', {
@@ -136,50 +140,51 @@ function buildSinglePost(req, res) {
 			throw err;
 		}
 
-		console.log(data);
-
-		var item = title,
+		var postMetaString,
+			postMetaJson,
 			postUrl,
-			grabUrl,
+			postContent,
 			encodedUrl,
-			rawTitle,
-			postTitle,
-			startOfDate,
-			endOfDate,
-			titleDate,
-			dateObj,
-			formattedDate,
-			grabMonth,
-			grabDate,
-			grabYear;
+			post,
+			excerpt,
+			endOfFirstParagraph,
+			startOfMeta,
+			endOfMeta,
+			dateObj;
 
-		// Start making the titles, urls and dates pretty
-		startOfDate = item.indexOf('__');
-		endOfDate = item.lastIndexOf('.');
-		titleDate = item.slice(startOfDate, endOfDate).replace(/_{1,}/g, ' ');
-		dateObj = new Date(titleDate);
-		grabMonth = dateObj.getMonth();
-		grabMonth = grabMonth + 1;
-		grabDate = dateObj.getDate();
-		grabYear = dateObj.getFullYear();
-		formattedDate = grabYear + '/' + grabMonth + '/' + grabDate;
-		rawTitle = item.slice(0, startOfDate);
-		postTitle = rawTitle.replace(/_{1,}/g, ' ');
-		grabUrl = item.replace('.md', '');
-		encodedUrl = encodeURIComponent(grabUrl);
+		// Get meta from post and JSON'ify it
+		startOfMeta = data.indexOf('{{');
+		endOfMeta = data.lastIndexOf('}}');
+		postMetaString = data.slice(startOfMeta, endOfMeta + 1).replace('{', '');
+		postMetaJson = JSON.parse(postMetaString);
+
+		// Now build additional meta data for post object
+		dateObj = new Date(postMetaJson.date);
+		encodedUrl = encodeURIComponent(item);
 		postUrl = '/blog/' + encodedUrl + '/';
+
+		// Grab article contents
+		postContent = data.slice(endOfMeta + 2);
+		postContent = postContent.trim();
+
+		// Make excerpt
+		endOfFirstParagraph = postContent.indexOf('\n\n');
+		excerpt = postContent.slice(0, endOfFirstParagraph).replace(/#{1,}/g, '');
 
 		// Start building the post object in the posts array
 		post = {
-			title: postTitle,
+			title: postMetaJson.title,
+			author: postMetaJson.author,
+			tags: postMetaJson.tags,
 			link: postUrl,
 			rawDate: dateObj,
-			postDate: formattedDate,
-			content: markdown.toHTML(data)
+			postDate: postMetaJson.date,
+			excerpt: markdown.toHTML(excerpt),
+			content: markdown.toHTML(postContent)
 		};
 
 		// We're done. Send post out!
-		sendPost();
+		sendPost(post);
 	})
 }
 

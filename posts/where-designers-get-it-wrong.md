@@ -1,3 +1,11 @@
+{{
+	"title": "Where Designers Get It Wrong",
+	"author": "Justin Lowery",
+	"date": "2012/6/30",
+	"tags": ["Design", "UX", "Content", "Philosophy"]
+}}
+
+
 ### Stop trying to be the most creative, the most unique and novel designer! It sounds weird, but it's true.
 
 As designers, we want to wow people because we like to be wowed. We appreciate novel, innovative, unconventional design, so we think others do too. What's worst is now we are trying to wow our fellow designers (see Dribbble.com), so it's warping our intention.

@@ -1,3 +1,10 @@
+{{
+	"title": "What Kind of Designer Are You?",
+	"author": "Justin Lowery",
+	"date": "2012/5/25",
+	"tags": ["Design", "Ix", "UI", "UX"]
+}}
+
 I hear quite a few people talk about designers as if we belong to a homogonous group all doing the same thing: "making things pretty". I hear UI and UX used a lot to describe a generic web designer, but these acronyms are not synonymous, so this question is a bit flawed. I'm going to attempt to differentiate the different kind of "designers", although I don't believe UX is about design in the traditional sense.
 
 ### User Interface (UI) designer:
